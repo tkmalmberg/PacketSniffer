@@ -3,7 +3,7 @@ import struct
 import textwrap
 
 def main():
-    conn = socket.socket(socket.AF_PACKET, socket.SOCK_RAW, socket.ntohs(3))
+    conn = socket.socket(socket.AF_INET, socket.SOCK_RAW, socket.ntohs(3))
 
     while True:
         raw_data, addr = conn.recvfrom(65535)
@@ -22,7 +22,7 @@ def ethernet_frame(data):
 # Passes in a byte address and makes it readable for a human
 # (i.e. AA:BB:CC:DD:EE:FF)
 def get_mac_addr(bytes_addr):
-    bytes_str = map('{:02x}'.format, bytes_addr)
+    bytes_str = map('{:02x}'.format, [int(i) for i in bytes_addr])
     return ':'.join(bytes_str).upper()
 
 
